@@ -1,0 +1,51 @@
+{
+  "name": "@dreamworld/dw-chip-select",
+  "version": "0.0.0-development",
+  "description": "Chips are compact elements that represent an input, attribute, or action.",
+  "main": "dw-chip-select.js",
+  "scripts": {
+    "start": "web-dev-server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:DreamworldSolutions/dw-chip-select.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DreamworldSolutions/dw-chip-select/issues"
+  },
+  "homepage": "https://github.com/DreamworldSolutions/dw-chip-select",
+  "author": {
+    "name": "Hiten Bhayani",
+    "email": "hiten@hisab.co",
+    "url": "https://github.com/hitendreamworld"
+  },
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "lit",
+    "chip",
+    "web components"
+  ],
+  "dependencies": {
+    "lit": "^2.7.0"
+  },
+  "devDependencies": {
+    "@open-wc/building-rollup": "^2.2.2",
+    "@rollup/plugin-commonjs": "^24.0.1",
+    "@web/dev-server": "^0.1.36",
+    "semantic-release": "^21.0.0"
+  },
+  "release": {
+    "branches": [
+      "+([0-9])?(.{+([0-9]),x}).x",
+      "main",
+      {
+        "name": "feature/*",
+        "prerelease": "${name.replace(/^feature\\//g, \"\")}",
+        "channel": "${name.replace(/^feature\\//g, \"\")}"
+      }
+    ]
+  }
+}
