@@ -1,15 +1,12 @@
 import "@dreamworld/dw-icon";
 import "@dreamworld/dw-ripple";
 import { css, html, LitElement, nothing } from "lit";
+import { ChipTypes } from "./utils";
+import { classMap } from "lit/directives/class-map.js";
+import {animate} from '@lit-labs/motion';
 
 // Styles
 import { body2 } from "@dreamworld/material-styles/typography-literals.js";
-
-const Types = {
-  filter: "filter",
-  choice: "choice",
-  input: "input",
-};
 
 export class DwChip extends LitElement {
   static get styles() {
@@ -26,6 +23,7 @@ export class DwChip extends LitElement {
 
         overflow: hidden;
         box-sizing: border-box;
+        cursor: pointer;
       }
 
       :host(:not([selected])) {
@@ -39,6 +37,14 @@ export class DwChip extends LitElement {
       :host([selected]) dw-icon {
         padding-right: 8px;
         --dw-icon-color: var(--mdc-theme-primary, #02afcd);
+      }
+
+      .hide {
+        width: 0;
+        overflow: hidden;
+      }
+      .show {
+        width: max-content;
       }
     `;
   }
@@ -83,7 +89,7 @@ export class DwChip extends LitElement {
   constructor() {
     super();
     this.icon = "done";
-    this.type = Types.filter;
+    this.type = ChipTypes.filter;
   }
 
   render() {
@@ -100,8 +106,12 @@ export class DwChip extends LitElement {
   }
 
   get _renderLeadingIcon() {
-    if (this.selected && this.type === Types.filter) {
-      return html`<dw-icon name=${this.icon}></dw-icon>`;
+    if (this.type === ChipTypes.filter) {
+      return html`<dw-icon
+        name=${this.icon}
+        class="${classMap({ show: this.selected, hide: !this.selected })}"
+        ${animate()}
+      ></dw-icon>`;
     }
     return nothing;
   }
