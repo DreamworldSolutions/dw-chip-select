@@ -236,35 +236,47 @@ export class DwChipSelect extends LitElement {
   }
 
   _onKeyDown(e) {
+    if (!this.focused) {
+      return;
+    }
     const { keyCode } = e;
-    if (this.focused) {
-      if (
-        KeyCode.ARROW_DOWN === keyCode ||
-        KeyCode.ARROW_LEFT === keyCode ||
-        KeyCode.ARROW_RIGHT === keyCode ||
-        KeyCode.ARROW_UP === keyCode
-      ) {
+    switch (keyCode) {
+      case KeyCode.ARROW_DOWN:
+      case KeyCode.ARROW_LEFT:
+      case KeyCode.ARROW_RIGHT:
+      case KeyCode.ARROW_UP:
+      case KeyCode.ENTER:
         e.stopPropagation();
         e.preventDefault();
-      }
-      if (KeyCode.ARROW_DOWN === keyCode || KeyCode.ARROW_LEFT === keyCode) {
-        if (this.items && this.items.length > 0) {
-          if (this.items.length - 1 === this._activatedIndex) {
-            this._activatedIndex = 0;
-          } else {
-            this._activatedIndex++;
-          }
+        break;
+      default:
+        break;
+    }
+
+    const itemsLength = this.items ? this.items.length : 0;
+
+    switch (keyCode) {
+      case KeyCode.ARROW_DOWN:
+      case KeyCode.ARROW_RIGHT:
+        if (itemsLength > 0) {
+          this._activatedIndex = (this._activatedIndex + 1) % itemsLength;
         }
-      }
-      if (KeyCode.ARROW_RIGHT === keyCode || KeyCode.ARROW_UP === keyCode) {
-        if (this.items && this.items.length > 0) {
-          if (this._activatedIndex === 0) {
-            this._activatedIndex = this.items.length - 1;
-          } else {
-            this._activatedIndex--;
-          }
+        break;
+      case KeyCode.ARROW_UP:
+      case KeyCode.ARROW_LEFT:
+        if (itemsLength > 0) {
+          this._activatedIndex = (this._activatedIndex - 1 + itemsLength) % itemsLength;
         }
-      }
+        break;
+      case KeyCode.ENTER:
+        if (this._activatedIndex > -1) {
+          const activatedItem = this.items[this._activatedIndex];
+          const isSelected = this.#_isSelected(activatedItem);
+          this._onChipToggle(activatedItem, isSelected);
+        }
+        break;
+      default:
+        break;
     }
   }
 }
