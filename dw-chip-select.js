@@ -5,7 +5,7 @@ import { repeat } from "lit/directives/repeat.js";
 import * as TypographyLiterals from "@dreamworld/material-styles/typography-literals.js";
 
 // Utils
-import { ChipTypes } from "./utils";
+import { ChipTypes, KeyCode } from "./utils";
 import isEqual from "lodash-es/isEqual.js";
 import cloneDeep from "lodash-es/cloneDeep.js";
 
@@ -16,6 +16,7 @@ export class DwChipSelect extends LitElement {
     return css`
       :host {
         display: block;
+        outline: none;
       }
 
       .label {
@@ -92,19 +93,34 @@ export class DwChipSelect extends LitElement {
       valueEquator: { type: Function },
 
       /**
+       * Whether component is focused or not
+       */
+      focused: { type: Boolean },
+
+      /**
        * Computed property from valueProvider and valueExpression
        */
       _valueProvider: { type: Function },
+
+      /**
+       * index of activated Item
+       * default: -1
+       */
+      _activatedIndex: { type: Number },
     };
   }
 
   constructor() {
     super();
+    this.tabIndex = "0";
     this.valueTextProvider = (item) => item;
     this._valueProvider = (item) => item;
     this.type = ChipTypes.filter;
+    this._activatedIndex = -1;
 
     this.valueEquator = (v1, v2) => v1 === v2;
+
+    this._onKeyDown = this._onKeyDown.bind(this);
   }
 
   render() {
@@ -122,9 +138,11 @@ export class DwChipSelect extends LitElement {
     return html`<div class="chip-wrapper">
       ${repeat(this.items, (item, index) => {
         const selected = this.#_isSelected(item);
+        const activated = this.#_isActivated(index);
         return html`<dw-chip
           .value=${this.valueTextProvider(item)}
           ?selected=${selected}
+          ?activated=${activated}
           .type=${this.type}
           @click=${() => this._onChipToggle(item, selected)}
         ></dw-chip>`;
@@ -135,6 +153,11 @@ export class DwChipSelect extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.#_computeValueProvider();
+
+    this.addEventListener("focusin", this._onFocusIn);
+    this.addEventListener("focusout", this._onFocusOut);
+
+    window.addEventListener("keydown", this._onKeyDown);
   }
 
   willUpdate(_changedProperties) {
@@ -196,6 +219,53 @@ export class DwChipSelect extends LitElement {
     }
 
     return this.valueEquator(this._valueProvider(item), this.value);
+  }
+
+  #_isActivated(index) {
+    return this._activatedIndex === index;
+  }
+
+  _onFocusIn() {
+    this._activatedIndex = 0;
+    this.focused = true;
+  }
+
+  _onFocusOut() {
+    this._activatedIndex = -1;
+    this.focused = false;
+  }
+
+  _onKeyDown(e) {
+    const { keyCode } = e;
+    if (this.focused) {
+      if (
+        KeyCode.ARROW_DOWN === keyCode ||
+        KeyCode.ARROW_LEFT === keyCode ||
+        KeyCode.ARROW_RIGHT === keyCode ||
+        KeyCode.ARROW_UP === keyCode
+      ) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+      if (KeyCode.ARROW_DOWN === keyCode || KeyCode.ARROW_LEFT === keyCode) {
+        if (this.items && this.items.length > 0) {
+          if (this.items.length - 1 === this._activatedIndex) {
+            this._activatedIndex = 0;
+          } else {
+            this._activatedIndex++;
+          }
+        }
+      }
+      if (KeyCode.ARROW_RIGHT === keyCode || KeyCode.ARROW_UP === keyCode) {
+        if (this.items && this.items.length > 0) {
+          if (this._activatedIndex === 0) {
+            this._activatedIndex = this.items.length - 1;
+          } else {
+            this._activatedIndex--;
+          }
+        }
+      }
+    }
   }
 }
 
