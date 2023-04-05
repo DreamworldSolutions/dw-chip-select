@@ -3,7 +3,7 @@ import "@dreamworld/dw-ripple";
 import { css, html, LitElement, nothing } from "lit";
 import { ChipTypes } from "./utils";
 import { classMap } from "lit/directives/class-map.js";
-import {animate} from '@lit-labs/motion';
+import { animate } from "@lit-labs/motion";
 
 // Styles
 import { body2 } from "@dreamworld/material-styles/typography-literals.js";
@@ -19,6 +19,7 @@ export class DwChip extends LitElement {
         padding-right: 12px;
         height: var(--dw-chip-height, 32px);
         border-radius: calc(var(--dw-chip-height, 32px) / 2);
+        border: 1px solid transparent;
         ${body2};
 
         overflow: hidden;
