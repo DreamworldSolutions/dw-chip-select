@@ -1,11 +1,10 @@
-import { html, LitElement, css, nothing } from "lit";
-import "@dreamworld/dw-ripple";
 import "@dreamworld/dw-icon";
+import "@dreamworld/dw-ripple";
+import { css, html, LitElement, nothing } from "lit";
 
 // Styles
-import * as TypographyLiterals from "@dreamworld/material-styles/typography-literals.js";
+import { body2 } from "@dreamworld/material-styles/typography-literals.js";
 
-const componentName = "dw-chip";
 const Types = {
   filter: "filter",
   choice: "choice",
@@ -23,6 +22,7 @@ export class DwChip extends LitElement {
         padding-right: 12px;
         height: var(--dw-chip-height, 32px);
         border-radius: calc(var(--dw-chip-height, 32px) / 2);
+        ${body2};
 
         overflow: hidden;
         box-sizing: border-box;
@@ -36,17 +36,9 @@ export class DwChip extends LitElement {
         color: var(--mdc-theme-primary, #02afcd);
       }
 
-      dw-ripple {
-        position: absolute;
-      }
-
       :host([selected]) dw-icon {
         padding-right: 8px;
         --dw-icon-color: var(--mdc-theme-primary, #02afcd);
-      }
-
-      .value {
-        ${TypographyLiterals.body2};
       }
     `;
   }
@@ -115,4 +107,4 @@ export class DwChip extends LitElement {
   }
 }
 
-customElements.define(componentName, DwChip);
+customElements.define("dw-chip", DwChip);

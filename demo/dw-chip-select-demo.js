@@ -1,9 +1,7 @@
+import { ThemeStyle } from "@dreamworld/material-styles/theme.js";
 import { css, html, LitElement } from "lit";
 import "../dw-chip-select.js";
 import "../dw-chip.js";
-import { ThemeStyle } from "@dreamworld/material-styles/theme.js";
-
-const componentName = "dw-chip-select-demo";
 
 export class DwChipSelectDemo extends LitElement {
   static get styles() {
@@ -33,4 +31,4 @@ export class DwChipSelectDemo extends LitElement {
   }
 }
 
-customElements.define(componentName, DwChipSelectDemo);
+customElements.define("dw-chip-select-demo", DwChipSelectDemo);
