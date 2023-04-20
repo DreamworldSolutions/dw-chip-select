@@ -9,6 +9,8 @@ import { ChipTypes, KeyCode } from "./utils";
 import isEqual from "lodash-es/isEqual.js";
 import cloneDeep from "lodash-es/cloneDeep.js";
 
+import "./dw-chip.js";
+
 export class DwChipSelect extends LitElement {
   static get styles() {
     return css`
