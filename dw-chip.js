@@ -47,6 +47,14 @@ export class DwChip extends LitElement {
       .show {
         width: max-content;
       }
+
+      .shimmer {
+        background: var(--dw-chip-select-shimmer-gradiant, linear-gradient(to right, #f1efef, #f9f8f8, #e7e5e5));
+        height: 20px;
+        width: 64px;
+        flex: 1;
+        border-radius: 4px;
+      }
     `;
   }
 
@@ -84,6 +92,12 @@ export class DwChip extends LitElement {
        * Default: 'done'
        */
       icon: { type: String },
+
+      /**
+       * Input property
+       * Whether to show shimmer view or not
+       */
+      shimmer: { type: Boolean },
     };
   }
 
@@ -94,6 +108,9 @@ export class DwChip extends LitElement {
   }
 
   render() {
+    if (this.shimmer) {
+      return html`<div class="shimmer"></div>`;
+    }
     return html`
       <dw-ripple
         primary

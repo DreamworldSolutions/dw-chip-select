@@ -1,15 +1,18 @@
 import { css, html, LitElement, nothing } from "lit";
 import { repeat } from "lit/directives/repeat.js";
 
+// View Elements
+import "./dw-chip.js";
+
 // Styles
 import * as TypographyLiterals from "@dreamworld/material-styles/typography-literals.js";
 
 // Utils
-import { ChipTypes, KeyCode } from "./utils";
-import isEqual from "lodash-es/isEqual.js";
 import cloneDeep from "lodash-es/cloneDeep.js";
+import isEqual from "lodash-es/isEqual.js";
+import { ChipTypes, KeyCode } from "./utils";
 
-import "./dw-chip.js";
+const shimmerData = Array(3).fill({});
 
 export class DwChipSelect extends LitElement {
   static get styles() {
@@ -131,7 +134,11 @@ export class DwChipSelect extends LitElement {
   }
 
   get _renderChipList() {
-    if (!this.items || this.items.length === 0) {
+    if (!this.items) {
+      return html`<div class="chip-wrapper">${repeat(shimmerData, () => html`<dw-chip shimmer></dw-chip>`)}</div>`;
+    }
+
+    if (this.items.length === 0) {
       return nothing;
     }
 
@@ -156,7 +163,7 @@ export class DwChipSelect extends LitElement {
 
     this.addEventListener("focusin", this._onFocusIn);
     this.addEventListener("focusout", this._onFocusOut);
-    this.addEventListener('mousedown', this._onMouseDown)
+    this.addEventListener("mousedown", this._onMouseDown);
 
     window.addEventListener("keydown", this._onKeyDown);
   }
@@ -166,7 +173,7 @@ export class DwChipSelect extends LitElement {
 
     this.removeEventListener("focusin", this._onFocusIn);
     this.removeEventListener("focusout", this._onFocusOut);
-    this.removeEventListener('mousedown', this._onMouseDown)
+    this.removeEventListener("mousedown", this._onMouseDown);
 
     window.removeEventListener("keydown", this._onKeyDown);
   }
@@ -242,7 +249,7 @@ export class DwChipSelect extends LitElement {
   }
 
   _onFocusIn() {
-    this.mouseDowned ? this.mouseDowned = false : this._activatedIndex = 0;
+    this.mouseDowned ? (this.mouseDowned = false) : (this._activatedIndex = 0);
     this.focused = true;
   }
 
