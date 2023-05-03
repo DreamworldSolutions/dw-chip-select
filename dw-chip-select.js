@@ -12,7 +12,7 @@ import cloneDeep from "lodash-es/cloneDeep.js";
 import isEqual from "lodash-es/isEqual.js";
 import { ChipTypes, KeyCode } from "./utils";
 
-const shimmerData = Array(3).fill({});
+const shimmerData = Array(2).fill({});
 
 export class DwChipSelect extends LitElement {
   static get styles() {
