@@ -24,12 +24,25 @@ export class DwChipSelectDemo extends LitElement {
       `,
     ];
   }
+
+  static get properties() {
+    return {
+      paymentTypes: { type: Array}
+    }
+  }
+
+  firstUpdated() {
+    setTimeout(() => {
+      this.paymentTypes = PaymentTypes
+    }, 1000)
+  }
+
   render() {
     return html`
       <dw-chip-select
         label="Filter"
         .valueExpression=${"name"}
-        .items=${PaymentTypes}
+        .items=${this.paymentTypes}
         .valueTextProvider=${(item) => item.label}
         @change=${this._onChange}
       ></dw-chip-select>
