@@ -15,7 +15,6 @@ export class DwChip extends LitElement {
         position: relative;
         display: flex;
         align-items: center;
-        padding-left: 12px;
         padding-right: 12px;
         height: var(--dw-chip-height, 32px);
         border-radius: calc(var(--dw-chip-height, 32px) / 2);
@@ -28,6 +27,7 @@ export class DwChip extends LitElement {
       }
 
       :host(:not([selected])) {
+        padding-left: 12px;
         border: 1px solid var(--mdc-theme-divider-color, rgba(0, 0, 0, 0.12));
       }
 
@@ -37,6 +37,7 @@ export class DwChip extends LitElement {
 
       :host([selected]) dw-icon {
         padding-right: 8px;
+        padding-left: 4px;
         --dw-icon-color: var(--mdc-theme-primary, #02afcd);
       }
 
