@@ -26,9 +26,13 @@ export class DwChip extends LitElement {
         box-sizing: border-box;
         cursor: pointer;
       }
-
+      
       :host(:not([selected])) {
         border: 1px solid var(--mdc-theme-divider-color, rgba(0, 0, 0, 0.12));
+      }
+
+      :host([selected][type="filter"]) {
+        padding-left: 0px;
       }
 
       :host([selected]) {
@@ -37,6 +41,7 @@ export class DwChip extends LitElement {
 
       :host([selected]) dw-icon {
         padding-right: 8px;
+        padding-left: 4px;
         --dw-icon-color: var(--mdc-theme-primary, #02afcd);
       }
 
@@ -44,6 +49,7 @@ export class DwChip extends LitElement {
         width: 0;
         overflow: hidden;
       }
+
       .show {
         width: max-content;
       }
@@ -65,7 +71,7 @@ export class DwChip extends LitElement {
        * Possible values: 'filter', 'choice', and 'input'
        * Default value: 'filter'
        */
-      type: { type: String },
+      type: { type: String, reflect: true },
 
       /**
        * Indicates whether the chip is selected or not.
