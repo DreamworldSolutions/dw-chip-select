@@ -1,12 +1,16 @@
+import { css, html, LitElement, nothing } from "@dreamworld/pwa-helpers/lit.js";
+import { classMap } from "lit/directives/class-map.js";
+
+// View Elements
 import "@dreamworld/dw-icon";
 import "@dreamworld/dw-ripple";
-import { css, html, LitElement, nothing } from "lit";
+
+// Utils
 import { ChipTypes } from "./utils";
-import { classMap } from "lit/directives/class-map.js";
-import { animate } from "@lit-labs/motion";
 
 // Styles
 import { body2 } from "@dreamworld/material-styles/typography-literals.js";
+import { animate } from "@lit-labs/motion";
 
 export class DwChip extends LitElement {
   static get styles() {
@@ -26,7 +30,7 @@ export class DwChip extends LitElement {
         box-sizing: border-box;
         cursor: pointer;
       }
-      
+
       :host(:not([selected])) {
         border: 1px solid var(--mdc-theme-divider-color, rgba(0, 0, 0, 0.12));
       }
@@ -55,7 +59,10 @@ export class DwChip extends LitElement {
       }
 
       .shimmer {
-        background: var(--dw-chip-select-shimmer-gradiant, linear-gradient(to right, #f1efef, #f9f8f8, #e7e5e5));
+        background: var(
+          --dw-chip-select-shimmer-gradiant,
+          linear-gradient(to right, #f1efef, #f9f8f8, #e7e5e5)
+        );
         height: 20px;
         width: 64px;
         flex: 1;

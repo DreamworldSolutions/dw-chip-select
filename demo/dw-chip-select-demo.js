@@ -27,14 +27,21 @@ export class DwChipSelectDemo extends LitElement {
 
   static get properties() {
     return {
-      paymentTypes: { type: Array}
-    }
+      paymentTypes: { type: Array },
+
+      filterValue: { type: Array },
+    };
+  }
+
+  constructor() {
+    super();
+    this.filterValue = ["India", "Norway"];
   }
 
   firstUpdated() {
     setTimeout(() => {
-      this.paymentTypes = PaymentTypes
-    }, 1000)
+      this.paymentTypes = PaymentTypes;
+    }, 1000);
   }
 
   render() {
@@ -46,6 +53,14 @@ export class DwChipSelectDemo extends LitElement {
         .valueTextProvider=${(item) => item.label}
         @change=${this._onChange}
       ></dw-chip-select>
+
+      <dw-chip-select
+        label="Filter With  Value"
+        .value="${this.filterValue}"
+        .items=${country_list}
+        @change=${this._onChange}
+      ></dw-chip-select>
+
       <dw-chip-select
         type="choice"
         label="Choice"

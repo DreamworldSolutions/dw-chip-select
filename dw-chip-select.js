@@ -1,4 +1,4 @@
-import { css, html, LitElement, nothing } from "lit";
+import { css, html, LitElement, nothing } from "@dreamworld/pwa-helpers/lit.js";
 import { repeat } from "lit/directives/repeat.js";
 
 // View Elements
@@ -8,8 +8,7 @@ import "./dw-chip.js";
 import * as TypographyLiterals from "@dreamworld/material-styles/typography-literals.js";
 
 // Utils
-import cloneDeep from "lodash-es/cloneDeep.js";
-import isEqual from "lodash-es/isEqual.js";
+import { cloneDeep, isEqual } from "lodash-es";
 import { ChipTypes, KeyCode } from "./utils";
 
 const shimmerData = Array(2).fill({});
@@ -135,7 +134,9 @@ export class DwChipSelect extends LitElement {
 
   get _renderChipList() {
     if (!this.items) {
-      return html`<div class="chip-wrapper">${repeat(shimmerData, () => html`<dw-chip shimmer></dw-chip>`)}</div>`;
+      return html`<div class="chip-wrapper">
+        ${repeat(shimmerData, () => html`<dw-chip shimmer></dw-chip>`)}
+      </div>`;
     }
 
     if (this.items.length === 0) {
@@ -187,7 +188,7 @@ export class DwChipSelect extends LitElement {
   _onChipToggle(item, selected, index) {
     this._activatedIndex = index;
     const oItem = this._valueProvider(item);
-    let oValue = this.value;
+    let oValue = cloneDeep(this.value);
     const previousValue = cloneDeep(oValue);
 
     switch (this.type) {
