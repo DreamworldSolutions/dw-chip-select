@@ -7,6 +7,7 @@ export default {
   appIndex: 'demo/index.html',
   open: true,
   nodeResolve: true,
+  watch: true,
   // esbuildTarget: "auto",
   plugins: [commonjs()]
 };
