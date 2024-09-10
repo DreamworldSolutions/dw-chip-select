@@ -205,9 +205,7 @@ export class DwChipSelect extends LitElement {
         }
         break;
       case ChipTypes.choice:
-        if (selected) {
-          oValue = undefined;
-        } else {
+        if (!selected) {
           oValue = oItem;
         }
         break;
