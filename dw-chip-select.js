@@ -70,6 +70,11 @@ export class DwChipSelect extends LitElement {
       valueTextProvider: { type: Function },
 
       /**
+       * specific chip should be disabled or not
+       */
+      chipDisabledProvider: { type: Function },
+
+      /**
        * This function provides the value.
        */
       valueProvider: { type: Function },
@@ -194,8 +199,6 @@ export class DwChipSelect extends LitElement {
   }
 
   _onChipToggle(item, selected, index) {
-    if (this.disabled) return;
-    
     this._activatedIndex = index;
     const oItem = this._valueProvider(item);
     let oValue = cloneDeep(this.value);
