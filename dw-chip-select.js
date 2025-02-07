@@ -35,6 +35,11 @@ export class DwChipSelect extends LitElement {
         margin-right: 8px;
         margin-top: 8px;
       }
+
+      dw-chip[disabled] {
+        opacity: 0.5;
+        pointer-events: none;
+      }
     `;
   }
 
@@ -147,11 +152,14 @@ export class DwChipSelect extends LitElement {
       ${repeat(this.items, (item, index) => {
         const selected = this.#_isSelected(item);
         const activated = this.#_isActivated(index);
+        const isDisabled = this.chipDisabledProvider ? this.chipDisabledProvider(item) : false;
+
         return html`<dw-chip
           .value=${this.valueTextProvider(item)}
           ?selected=${selected}
           ?activated=${activated}
           .type=${this.type}
+          ?disabled=${isDisabled}
           @click=${() => this._onChipToggle(item, selected, index)}
         ></dw-chip>`;
       })}
@@ -186,6 +194,8 @@ export class DwChipSelect extends LitElement {
   }
 
   _onChipToggle(item, selected, index) {
+    if (this.disabled) return;
+    
     this._activatedIndex = index;
     const oItem = this._valueProvider(item);
     let oValue = cloneDeep(this.value);
