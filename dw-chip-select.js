@@ -35,6 +35,11 @@ export class DwChipSelect extends LitElement {
         margin-right: 8px;
         margin-top: 8px;
       }
+
+      dw-chip[disabled] {
+        opacity: 0.5;
+        pointer-events: none;
+      }
     `;
   }
 
@@ -63,6 +68,11 @@ export class DwChipSelect extends LitElement {
        * This function returns a string and provides the value that represents the chip item.
        */
       valueTextProvider: { type: Function },
+
+      /**
+       * specific chip should be disabled or not
+       */
+      chipDisabledProvider: { type: Function },
 
       /**
        * This function provides the value.
@@ -147,11 +157,14 @@ export class DwChipSelect extends LitElement {
       ${repeat(this.items, (item, index) => {
         const selected = this.#_isSelected(item);
         const activated = this.#_isActivated(index);
+        const isDisabled = this.chipDisabledProvider ? this.chipDisabledProvider(item) : false;
+
         return html`<dw-chip
           .value=${this.valueTextProvider(item)}
           ?selected=${selected}
           ?activated=${activated}
           .type=${this.type}
+          ?disabled=${isDisabled}
           @click=${() => this._onChipToggle(item, selected, index)}
         ></dw-chip>`;
       })}
